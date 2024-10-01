@@ -21,21 +21,6 @@ def generate_toggle_matrix(n):
 
     return A
 
-# Find n in (I + T)^n x = 0
-# Returns n and current_x to check it
-def find_n(x):
-    global size, A
-    n = 0
-    current_x = x
-    M = 100 # max value to not have infinite loop
-    while not np.array_equal(current_x, np.zeros(size, dtype=int)):
-        current_x = np.dot(A, current_x) % 2
-        n += 1
-        if n > M:  # Avoid infinite loop
-            break
-    
-    return (n, current_x)
-
 def test_all_states():
     global size
     
@@ -67,6 +52,7 @@ print('---------------------------')
 for arr in test_all_states():
     print(f'For x={arr}', end=': ')
     
+    # Apply powers of A to x, and check when it results in zero vector
     n = 0
     current_x = arr
     M = 100 # max value to not have infinite loop
@@ -77,5 +63,3 @@ for arr in test_all_states():
             break
     
     print(n)
-    
-    # print (n, current_x)
